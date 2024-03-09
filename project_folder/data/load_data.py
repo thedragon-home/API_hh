@@ -3,6 +3,7 @@ import json
 from abc import ABC, abstractmethod
 from project_folder.src.vacancy import *
 
+
 class GetVacancy(ABC):
     """
     Абстрактный класс для load_data
@@ -57,18 +58,25 @@ class HeadHunterAPI(GetVacancy):
         return hh_list
 
 
-class JSON_file(JSON_read_write):
-    """
-    Запись и Чтения json файла
-    """
+class JSON_file:
+    """Запись и чтения JSON файла"""
 
-    def write_file(self):# Записываем файл
-        with open('vacancies.json', 'w', encoding='utf-8') as file:
-            json.dump(self.to_list_dict(), file, indent=4, ensure_ascii=False)
+    def __init__(self, file_name="vacancies.json"):
+        self.file_name = file_name
 
-    def read_file(self):# Читаем файл
-        with open('vacancies.json', 'r', encoding='UTF-8') as file:
-            list_dict = json.load(file)
-            self.all_vacancies = []
-            for i in list_dict:
-                self.all_vacancies.append(Vacancy.from_dict(i))
+    def file_writer(self, data):
+        """Запись данных в JSON файл"""
+        with open(self.file_name, 'w', encoding='utf-8') as file:
+            json.dump(data, file, ensure_ascii=False, indent=4)
+
+    def file_reader(self):
+        """Чтение данных из JSON файла"""
+        with open(self.file_name, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+        return data
+
+    def write_vacancies_to_file(self, vacancies):
+        """Записывает список вакансий в JSON файл"""
+        vacancies_dict = [vacancy.to_dict() for vacancy in vacancies]
+        self.file_writer(vacancies_dict)
+
