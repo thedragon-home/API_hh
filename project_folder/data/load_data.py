@@ -20,11 +20,11 @@ class JSON_read_write(ABC):
     """
 
     @abstractmethod
-    def write_file(self):
+    def file_writer(self):
         pass
 
     @abstractmethod
-    def read_file(self):
+    def file_reader(self):
         pass
 
 
@@ -58,14 +58,16 @@ class HeadHunterAPI(GetVacancy):
         return hh_list
 
 
-class JSON_file:
+class JSON_file(JSON_read_write):
     """Запись и чтения JSON файла"""
 
     def __init__(self, file_name="vacancies.json"):
         self.file_name = file_name
 
     def file_writer(self, data):
-        """Запись данных в JSON файл"""
+        """Запись данных в JSON файл
+        :type data: object
+        """
         with open(self.file_name, 'w', encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
 
@@ -80,3 +82,7 @@ class JSON_file:
         vacancies_dict = [vacancy.to_dict() for vacancy in vacancies]
         self.file_writer(vacancies_dict)
 
+    def file_delete(self):
+        """Удаление JSON файла"""
+        if os.path.exists(self.file_name):
+            os.remove(self.file_name)
