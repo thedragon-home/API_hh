@@ -14,7 +14,7 @@ class GetVacancy(ABC):
         pass
 
 
-class JSON_read_write(ABC):
+class JSONReadWrite(ABC):
     """
     Запись и чтения json файла
     """
@@ -58,7 +58,7 @@ class HeadHunterAPI(GetVacancy):
         return hh_list
 
 
-class JSON_file(JSON_read_write):
+class JSONFile(JSONReadWrite):
     """Запись и чтения JSON файла"""
 
     def __init__(self, file_name="vacancies.json"):
