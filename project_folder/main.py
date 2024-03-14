@@ -1,11 +1,11 @@
 from project_folder.data.load_data import HeadHunterAPI
-from project_folder.data.load_data import JSON_file
+from project_folder.data.load_data import JSONFile
 from project_folder.src.vacancy import *
 
 class VacancyManager:
     def __init__(self):
         self.hh_api = HeadHunterAPI()
-        self.json_saver = JSON_file()
+        self.json_saver = JSONFile()
 
     def get_vacancies_from_hh(self):
         keyword = input('Напишите название профессии: \n')
